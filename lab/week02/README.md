@@ -1,1 +1,2 @@
-# GEOG-678-755-Fall25
+# Lab 2
+GEOG-678-755-Fall25
