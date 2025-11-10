@@ -7,4 +7,6 @@ Map 1- https://tamu.maps.arcgis.com/apps/mapviewer/index.html?webmap=b2c3b4df460
 Map 2- https://tamu.maps.arcgis.com/apps/mapviewer/index.html?webmap=a6e66fe342104951808b82074b29d2b4
 
 
-![alt text](image.png)
+![alt text][def]
+
+[def]: image.png
