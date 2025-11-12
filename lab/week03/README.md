@@ -1,4 +1,4 @@
-[resume.html](https://github.com/user-attachments/files/23508809/resume.html)# Resume Lab
+# Resume Lab
 
 HTML-
 
