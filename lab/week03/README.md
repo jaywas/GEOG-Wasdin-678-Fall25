@@ -1,4 +1,4 @@
-# Resume Lab
+[resume.html](https://github.com/user-attachments/files/23508809/resume.html)# Resume Lab
 
 HTML-
 
@@ -9,7 +9,9 @@ CSS-
 <img width="1076" height="788" alt="CSS" src="https://github.com/user-attachments/assets/2fbcad01-b868-492c-aa88-35b284f8e5de" />
 
 Resume- 
-[Wasdin Resume.pdf](https://github.com/user-attachments/files/23467230/Wasdin.Resume.pdf)
+[Wasdin Resume.pdf](https://github.com/user-attachments/files/23508812/Wasdin.Resume.pdf)
+
+
 
 
 
