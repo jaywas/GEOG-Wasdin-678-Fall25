@@ -62,7 +62,7 @@ function Run3()
             }
         }
     }
-);
+;
     console.log("The worst student has been found. It is:");
     console.log(worstStudent);
 }
