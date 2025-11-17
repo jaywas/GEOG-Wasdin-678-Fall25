@@ -20,7 +20,7 @@ var theJSON =
     ]
 }
 
-var theJSON =
+var theJSON2 =
 {
     "data": [
         {"pointId": 1, "lat": 30.61586, "lon": -96.35557},
