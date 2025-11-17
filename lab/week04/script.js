@@ -2,10 +2,10 @@ function Run()
 {
     var myObject =
     {
-    	myValue: 'some text',
+        myValue: 'some text',
         subObject:
         {
-        	deeperValue1: 6,
+            deeperValue1: 6,
             deeperValue2: "more stuff"
         }
     };
@@ -15,14 +15,15 @@ function Run()
 
 function Run2()
 {
-    var person1 =  BuildObject('dan', 39, 4.0);
-    var person2 =  BuildObject('edgar', 25, 2.0);
-    var person3 =  BuildObject('paul', 55, 3.9);
+    var person1 = BuildObject('dan', 39, 4.0);
+    var person2 = BuildObject('edgar', 25, 2.0);
+    var person3 = BuildObject('paul', 55, 3.9);
 
     console.log(person1);
     console.log(person2);
     console.log(person3);
 }
+
 function BuildObject(value1, value2, value3)
 {
     var returnObject =
@@ -44,27 +45,22 @@ function Run3()
 
     var worstStudent = FindWorstStudent(students);
 
- function FindWorstStudent(listofstudents)
+    console.log("The worst student has been found. It is:");
+    console.log(worstStudent);
+}
+function FindWorstStudent(listofstudents)
 {
     var worstStudent = null;
 
     listofstudents.forEach(function(element)
     {
-        if (worstStudent == null)
+        if (worstStudent == null || element.gpa < worstStudent.gpa)
         {
             worstStudent = element;
-        }
-        else
-        {
-            if (element.gpa < worstStudent.gpa)
-            {
-                worstStudent = element;
-            }
         }
     });
 
     return worstStudent;
-}
 
     console.log("The worst student has been found. It is:");
     console.log(worstStudent);
@@ -74,8 +70,9 @@ function Run4()
 {
     console.log(theJSON);
     var students = theJSON.data;
+
     var worstStudent = FindWorstStudent(students);
 
-    console.log("the worst student has been found. It is: ");
+    console.log("The worst student has been found. It is:");
     console.log(worstStudent);
 }
