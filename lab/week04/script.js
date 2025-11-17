@@ -69,3 +69,13 @@ function Run3()
     console.log("The worst student has been found. It is:");
     console.log(worstStudent);
 }
+
+function Run4()
+{
+    console.log(theJSON);
+    var students = theJSON.data;
+    var worstStudent = FindWorstStudent(students);
+
+    console.log("the worst student has been found. It is: ");
+    console.log(worstStudent);
+}
