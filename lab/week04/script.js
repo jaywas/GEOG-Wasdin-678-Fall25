@@ -43,26 +43,29 @@ function Run3()
     var students = [person1, person2, person3];
 
     var worstStudent = FindWorstStudent(students);
+
  function FindWorstStudent(listofstudents)
 {
-    var worstStudent;
-        element =>
-        {  
-            if (worstStudent == null)
+    var worstStudent = null;
+
+    listofstudents.forEach(function(element)
+    {
+        if (worstStudent == null)
+        {
+            worstStudent = element;
+        }
+        else
+        {
+            if (element.gpa < worstStudent.gpa)
             {
                 worstStudent = element;
-            }    
-
-            else
-            {
-                if (element.gpa < worstStudent.gpa)
-                {
-                    worstStudent = element;
-                }    
             }
         }
-    }
-;
+    });
+
+    return worstStudent;
+}
+
     console.log("The worst student has been found. It is:");
     console.log(worstStudent);
 }
