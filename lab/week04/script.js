@@ -35,7 +35,7 @@ function BuildObject(value1, value2, value3)
     return returnObject;
 }
 function Run3()
-
+{
     var person1 =  BuildObject('dan', 39, 4.0);
     var person2 =  BuildObject('edgar', 25, 2.0);
     var person3 =  BuildObject('paul', 55, 3.9);
@@ -45,4 +45,5 @@ function Run3()
     var students = FindWorstStudent(students);
 
     console.log("The worst student has been found. It is: ");
-    console.log(worstStudent):
+    console.log(worstStudent);
+}    
