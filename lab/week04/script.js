@@ -157,7 +157,7 @@ function findBottomRight(pointlist) {
 
     return { pointId: 4, lat: minLat, lon: maxLon };
 }
-function RunBoundingBox() {
+function Run5() {
     var topLeftPoint = findTopLeft(theJSON);
     var topRightPoint = findTopRight(theJSON);
     var bottomLeftPoint = findBottomLeft(theJSON);
