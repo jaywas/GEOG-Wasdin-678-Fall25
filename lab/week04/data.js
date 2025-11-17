@@ -19,3 +19,14 @@ var theJSON =
         }
     ]
 }
+
+var theJSON =
+{
+    "data": [
+        {"pointId": 1, "lat": 30.61586, "lon": -96.35557},
+        {"pointId": 1, "lat": 30.61724, "lon": -96.3368},
+        {"pointId": 1, "lat": 30.60649, "lon": -96.35613},
+        {"pointId": 1, "lat": 30.60718, "lon": -96.33817},
+        {"pointId": 1, "lat": 30.61479, "lon": -96.34729},
+    ]
+}
