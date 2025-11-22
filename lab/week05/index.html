@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Lab 5 Leaflet</title>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="">
-        </script>
-    </head>
-    <body>
-        <div id="mapid" style = "height: 500px"></div>
-        <script>
-        var mymap = L.map("mapid").setView([51.505, -0.09], 13);
-        L.tilelayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-        attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright"><Openstreetmap</a> <strong><a href="https://wma.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>",
-        tileSize: 512,
-        maxZoom: 18,
-        zoomOffset: -1,
-        id: 'mapbox/streets-v11',
-        accessToken: "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw"
-        })-addTo(mymap);
-        </script>
-    </body>
- </html>
+  <head>
+    <title>Lab 5 Leaflet</title>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+
+    <style>
+      #mapid {
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mapid"></div>
+
+    <script>
+      var mymap = L.map("mapid").setView([51.505, -0.09], 13);
+
+      L.tileLayer(
+        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+        {
+          attribution:
+            '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> ' +
+            '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
+            '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+          tileSize: 512,
+          maxZoom: 18,
+          zoomOffset: -1,
+          id: "mapbox/streets-v11",
+          accessToken:
+            "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw",
+        }
+      ).addTo(mymap);
+    </script>
+  </body>
+</html>
