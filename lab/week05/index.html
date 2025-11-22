@@ -11,12 +11,12 @@
         <script>
         var mymap = L.map("mapid").setView([51.505, -0.09], 13);
         L.tilelayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-            attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright"><Openstreetmap</a> <strong><a href="https://wma.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>",
-            tilesize: 512,
-            maxzoom: 18,
-            zoomOffset: -1,
-            id: “mapbox/streets-v11",
-            accessToken: "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw"
+        attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright"><Openstreetmap</a> <strong><a href="https://wma.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>",
+        tileSize: 512,
+        maxZoom: 18,
+        zoomOffset: -1,
+        id: 'mapbox/streets-v11',
+        accessToken: "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw"
         })-addTo(mymap);
         </script>
     </body>
