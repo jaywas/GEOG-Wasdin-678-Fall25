@@ -4,10 +4,10 @@
     <meta charset="utf-8" />
     <title>Leaflet Locate Map</title>
 
-    <!-- Mobile viewport -->
+  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <!-- Leaflet CSS -->
+ 
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -22,16 +22,16 @@
         }
         html, body, #map {
             height: 100%;
-            width: 100vw; /* you can change to 100% if you prefer */
+            width: 100vw; 
         }
     </style>
 </head>
 <body>
 
-    <!-- Map container -->
+  
     <div id="map"></div>
 
-    <!-- Leaflet JS -->
+
     <script
         src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
@@ -39,16 +39,16 @@
     ></script>
 
     <script>
-        // Initialize map
+       
         var map = L.map('map').fitWorld();
 
-        // Base map layer
+
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '© OpenStreetMap'
         }).addTo(map);
 
-        // Ask browser for location
+
         map.locate({ setView: true, maxZoom: 16 });
 
         function onLocationFound(e) {
