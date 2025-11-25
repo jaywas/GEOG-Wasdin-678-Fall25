@@ -4,27 +4,41 @@
     <meta charset="utf-8">
     <title>Lab 6 Leaflet</title>
 
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
-    <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    />
-
-
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- ⭐ US States GeoJSON file -->
+    <script type="text/javascript" src="https://leafletjs.com/examples/choropleth/us-states.js"></script>
+
 </head>
 
 <body>
+
     <div id="mapid" style="height: 500px; width: 800px; border: 1px solid #000;"></div>
 
     <script>
-
+        // Initialize the map
         var map = L.map("mapid").setView([39.74739, -106], 4);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        // OpenStreetMap basemap
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 19,
-            attribution: '© OpenStreetMap contributors'
+            attribution: "© OpenStreetMap contributors"
         }).addTo(map);
+
+
+        // ⭐⭐⭐ ADD THIS RIGHT AFTER THE MAP — YOUR FIRST GEOJSON LAYER ⭐⭐⭐
+        // Draw the state boundaries from us-states.js
+        L.geoJson(statesData).addTo(map);
+
+
+
+        // ------------------------------------------
+        // Your other GeoJSON data (points, lines, polygons)
+        // ------------------------------------------
 
         var myPoint = {
             "type": "Feature",
@@ -40,14 +54,8 @@
         };
 
         var myLines = [
-            {
-                "type": "LineString",
-                "coordinates": [[-100, 40], [-105, 45], [-110, 55]]
-            },
-            {
-                "type": "LineString",
-                "coordinates": [[-105, 40], [-110, 45], [-115, 55]]
-            }
+            { "type": "LineString", "coordinates": [[-100, 40], [-105, 45], [-110, 55]] },
+            { "type": "LineString", "coordinates": [[-105, 40], [-110, 45], [-115, 55]] }
         ];
 
         var myPolys = [
@@ -58,8 +66,8 @@
                     "type": "Polygon",
                     "coordinates": [[
                         [-104.05, 48.99],
-                        [-97.22,  48.98],
-                        [-96.58,  45.94],
+                        [-97.22, 48.98],
+                        [-96.58, 45.94],
                         [-104.03, 45.94],
                         [-104.05, 48.99]
                     ]]
@@ -81,33 +89,21 @@
             }
         ];
 
-        L.geoJSON(myPoint, {
-            onEachFeature: function (feature, layer) {
-                if (feature.properties && feature.properties.popupContent) {
-                    layer.bindPopup(feature.properties.popupContent);
-                }
-            }
-        }).addTo(map);
+        L.geoJSON(myPoint).addTo(map);
 
-        var myStyle = {
-            color: "#ff7800",
-            weight: 5,
-            opacity: 0.65
-        };
-
-        L.geoJSON(myLines, {
-            style: myStyle
-        }).addTo(map);
+        var myStyle = { color: "#ff7800", weight: 5, opacity: 0.65 };
+        L.geoJSON(myLines, { style: myStyle }).addTo(map);
 
         L.geoJSON(myPolys, {
             style: function (feature) {
                 switch (feature.properties.party) {
                     case "Republican": return { color: "#ff0000" };
-                    case "Democrat":   return { color: "#0000ff" };
+                    case "Democrat": return { color: "#0000ff" };
                 }
             }
         }).addTo(map);
 
     </script>
+
 </body>
 </html>
