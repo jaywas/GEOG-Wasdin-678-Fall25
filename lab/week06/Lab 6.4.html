@@ -56,14 +56,11 @@
         crossorigin=""
     ></script>
 
-    <!-- External TAMU Buildings GeoJSON as a JS file.
-         Make sure this file exists and defines a variable called TAMU_Buildings
-         that contains the GeoJSON FeatureCollection. -->
+
     <script src="TAMU_Buildings.js"></script>
 
     <script>
-        // 1. Create the map and zoom to TAMU campus
-        //    (adjust center if needed)
+
         var map = L.map('map').setView([30.615, -96.340], 16);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -79,8 +76,6 @@
             return this._div;
         };
 
-        // Adjust property names here if your GeoJSON uses different ones
-        // (e.g., BLDG_NAME, BLDG_ABBR, etc.)
         info.update = function (props) {
             this._div.innerHTML =
                 '<h4>TAMU Buildings</h4>' +
@@ -102,7 +97,7 @@
             };
         }
 
-        var buildingsLayer; // will hold the GeoJSON layer
+        var buildingsLayer; 
 
         function highlightFeature(e) {
             var layer = e.target;
@@ -137,8 +132,6 @@
             });
         }
 
-        // 5. Add the external TAMU buildings GeoJSON to the map
-        //    TAMU_Buildings should come from TAMU_Buildings.js
         buildingsLayer = L.geoJSON(TAMU_Buildings, {
             style: buildingStyle,
             onEachFeature: onEachBuilding
