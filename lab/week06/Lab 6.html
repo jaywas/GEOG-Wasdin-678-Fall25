@@ -3,7 +3,7 @@
 <head>
     <title>Lab 6 Leaflet</title>
 
-
+    <!-- Leaflet CSS -->
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -11,7 +11,7 @@
         crossorigin=""
     />
 
-
+    <!-- Leaflet JS -->
     <script
         src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdlxQxGm2A48HoEgjfqKsIN0QVnMcBCe8PKaoC0Y20wIlAxvA0zWea1opb1xzLx20Y3Rz+5w=="
@@ -24,26 +24,26 @@
     <div id="mapid" style="height: 500px; width: 800px; border: 1px solid #000;"></div>
 
     <script>
-   
+        // Initialize the map
         var map = L.map("mapid").setView([39.74739, -106], 4);
 
-            L.tileLayer(
-                "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
-                {
-                    attribution:
-                        '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> ' +
-                        '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
-                        '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
-                    tileSize: 512,
-                    maxZoom: 18,
-                    zoomOffset: -1,
-                    id: "mapbox/streets-v11",
-                    accessToken:
-                        "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw"
-                }
-            ).addTo(map);
-        };
+        // Add Mapbox basemap
+        L.tileLayer(
+            "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+            {
+                attribution:
+                    '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> ' +
+                    '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
+                    '<strong><a href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></strong>',
+                tileSize: 512,
+                maxZoom: 18,
+                zoomOffset: -1,
+                id: "mapbox/streets-v11",
+                accessToken:
+                    "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw"
+            }
+        ).addTo(map);
     </script>
-  </head>
-  <body></body>
+
+</body>
 </html>
