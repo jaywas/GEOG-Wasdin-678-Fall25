@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Jay Wasdin TAMU Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""
+    />
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #202020;
+            color: #f5f5f5;
+        }
+
+        h1 {
+            margin: 10px;
+            font-size: 22px;
+        }
+
+        #map {
+            height: 600px;
+            width: 100%;
+            border-top: 2px solid #444;
+        }
+
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            color: #000;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>Jay Was TAMU Map</h1>
+    <div id="map"></div>
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""
+    ></script>
+
+    <!-- External TAMU Buildings GeoJSON as a JS file.
+         Make sure this file exists and defines a variable called TAMU_Buildings
+         that contains the GeoJSON FeatureCollection. -->
+    <script src="TAMU_Buildings.js"></script>
+
+    <script>
+        // 1. Create the map and zoom to TAMU campus
+        //    (adjust center if needed)
+        var map = L.map('map').setView([30.615, -96.340], 16);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+
+        // Adjust property names here if your GeoJSON uses different ones
+        // (e.g., BLDG_NAME, BLDG_ABBR, etc.)
+        info.update = function (props) {
+            this._div.innerHTML =
+                '<h4>TAMU Buildings</h4>' +
+                (props
+                    ? '<b>' + (props.name || 'Unknown') + '</b><br />' +
+                      'Abbr: ' + (props.abbr || 'N/A')
+                    : 'Hover over a building');
+        };
+
+        info.addTo(map);
+
+        function buildingStyle(feature) {
+            return {
+                fillColor: 'purple',   
+                color: '#ffffff',
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.6
+            };
+        }
+
+        var buildingsLayer; // will hold the GeoJSON layer
+
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                weight: 3,
+                color: '#ffff00',  
+                fillOpacity: 0.8
+            });
+
+            if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+                layer.bringToFront();
+            }
+
+            info.update(layer.feature.properties);
+        }
+
+        function resetHighlight(e) {
+            buildingsLayer.resetStyle(e.target);
+            info.update();
+        }
+
+        function zoomToFeature(e) {
+            map.fitBounds(e.target.getBounds());
+        }
+
+        function onEachBuilding(feature, layer) {
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight,
+                click: zoomToFeature
+            });
+        }
+
+        // 5. Add the external TAMU buildings GeoJSON to the map
+        //    TAMU_Buildings should come from TAMU_Buildings.js
+        buildingsLayer = L.geoJSON(TAMU_Buildings, {
+            style: buildingStyle,
+            onEachFeature: onEachBuilding
+        }).addTo(map);
+    </script>
+</body>
+</html>
