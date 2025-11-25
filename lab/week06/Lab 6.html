@@ -3,6 +3,7 @@
 <head>
     <title>Lab 6 Leaflet</title>
 
+    <!-- Leaflet CSS -->
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -10,35 +11,41 @@
         crossorigin=""
     />
 
+    <!-- Leaflet JS -->
     <script
         src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdlxQxGm2A48HoEgjfqKsIN0QVnMcBCe8PKaoC0Y20wIlAxvA0zWea1opb1xzLx20Y3Rz+5w=="
         crossorigin=""
     ></script>
-
-    <script src="https://leafletjs.com/examples/choropleth/us-states.js"></script>
 </head>
 
 <body>
-    <div id="mapid" style="height: 500px; width: 800px; border: 1px solid #000;"></div>
+    <!-- Map container -->
+    <div id="mapid" style="height: 500px; width: 800px;"></div>
 
     <script>
+        // Initialize the map (centered over the western US)
         var map = L.map("mapid").setView([39.74739, -106], 4);
 
+        // Mapbox Streets tile layer
         L.tileLayer(
-            'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+            "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
             {
                 attribution:
                     'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
                     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 18,
-                id: 'mapbox/streets-v11',
+                id: "mapbox/streets-v11",
                 tileSize: 512,
                 zoomOffset: -1,
-                accessToken: 'pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWYzM2o2azAwYmczZHB2Z2VmMGpibnMifQ.ARqGnHih7CpWSzX05qW_OA'
+                accessToken:
+                    "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWYzM2o2azAwYmczZHB2Z2VmMGpibnMifQ.ARqGnHih7CpWSzX05qW_OA"
             }
         ).addTo(map);
 
+        // -----------------------
+        // GeoJSON point (Coors Field)
+        // -----------------------
         var myPoint = {
             "type": "Feature",
             "properties": {
@@ -52,6 +59,9 @@
             }
         };
 
+        // -----------------------
+        // GeoJSON line strings
+        // -----------------------
         var myLines = [
             {
                 "type": "LineString",
@@ -63,6 +73,9 @@
             }
         ];
 
+        // -----------------------
+        // GeoJSON polygons with "party" property
+        // -----------------------
         var myPolys = [
             {
                 "type": "Feature",
@@ -94,10 +107,16 @@
             }
         ];
 
-        L.geoJSON(myPoint).addTo(map);
-        L.geoJSON(myLines).addTo(map);
-        L.geoJSON(myPolys).addTo(map);
+        // Add basic GeoJSON layers
+        L.geoJSON(myPoint, {
+            onEachFeature: function (feature, layer) {
+                if (feature.properties && feature.properties.popupContent) {
+                    layer.bindPopup(feature.properties.popupContent);
+                }
+            }
+        }).addTo(map);
 
+        // Simple style for both lines
         var myStyle = {
             "color": "#ff7800",
             "weight": 5,
@@ -108,28 +127,14 @@
             style: myStyle
         }).addTo(map);
 
+        // Style polygons based on "party" attribute
         L.geoJSON(myPolys, {
             style: function (feature) {
                 switch (feature.properties.party) {
-                    case 'Republican': return { color: "#ff0000" };
-                    case 'Democrat':   return { color: "#0000ff" };
+                    case "Republican": return { color: "#ff0000" };
+                    case "Democrat":   return { color: "#0000ff" };
                 }
             }
-        }).addTo(map);
-
-
-        function zoomToFeature(e) {
-            map.fitBounds(e.target.getBounds());
-        }
-
-        function onEachFeature(feature, layer) {
-            layer.on({
-                click: zoomToFeature
-            });
-        }
-
-        L.geoJSON(statesData, {
-            onEachFeature: onEachFeature
         }).addTo(map);
     </script>
 </body>
