@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <title>Lab 6 Leaflet</title>
+
 
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2f1PHzVhJSVcW0vVbqq0LCScCxxbQcmblAsH0Awo5/keqq/5HXMZ19CsR4PsZChSR7A==" crossorigin=""/>
+        integrity="sha512-xodZBNTC5n17Xt2f1PHzVhJSVcW0vVbqq0LCScCxxbQcmblAsH0Awo5/keqq/5HXMZ19CsR4PsZChSR7A=="
+        crossorigin=""
+    />
+
 
     <script
         src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdlxQxGm2A48HoEgjfqKsIN0QVnMcBCe8PKaoC0Y20wIlAxvA0zWea1opb1xzLx20Y3Rz+5w==" crossorigin=""></script>
+        integrity="sha512-XQoYMqMTK8LvdlxQxGm2A48HoEgjfqKsIN0QVnMcBCe8PKaoC0Y20wIlAxvA0zWea1opb1xzLx20Y3Rz+5w=="
+        crossorigin=""
+    ></script>
+</head>
+
+<body>
+
+    <div id="mapid" style="height: 500px; width: 800px; border: 1px solid #000;"></div>
+
 
     <script>
-        window.onload = function () {
-
-            var map = L.map("mapid").setView([39.74739, -106], 4);
+   
+        var map = L.map("mapid").setView([39.74739, -106], 4);
 
             L.tileLayer(
                 "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
