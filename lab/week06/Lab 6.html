@@ -3,7 +3,6 @@
 <head>
     <title>Lab 6 Leaflet</title>
 
-    <!-- Leaflet CSS -->
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -11,14 +10,12 @@
         crossorigin=""
     />
 
-    <!-- Leaflet JS (same version as CSS) -->
     <script
         src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdlxQxGm2A48HoEgjfqKsIN0QVnMcBCe8PKaoC0Y20wIlAxvA0zWea1opb1xzLx20Y3Rz+5w=="
         crossorigin=""
     ></script>
 
-    <!-- States data for choropleth example (defines statesData) -->
     <script src="https://leafletjs.com/examples/choropleth/us-states.js"></script>
 </head>
 
@@ -26,10 +23,8 @@
     <div id="mapid" style="height: 500px; width: 800px; border: 1px solid #000;"></div>
 
     <script>
-        // Initialize the map
         var map = L.map("mapid").setView([39.74739, -106], 4);
 
-        // Add Mapbox basemap
         L.tileLayer(
             'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
             {
@@ -40,11 +35,9 @@
                 id: 'mapbox/streets-v11',
                 tileSize: 512,
                 zoomOffset: -1,
-                accessToken: 'pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw'
+                accessToken: 'pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWYzM2o2azAwYmczZHB2Z2VmMGpibnMifQ.ARqGnHih7CpWSzX05qW_OA'
             }
         ).addTo(map);
-
-        // --- Your GeoJSON features ---
 
         var myPoint = {
             "type": "Feature",
@@ -101,12 +94,10 @@
             }
         ];
 
-        // Add basic GeoJSON layers
         L.geoJSON(myPoint).addTo(map);
         L.geoJSON(myLines).addTo(map);
         L.geoJSON(myPolys).addTo(map);
 
-        // Styled lines
         var myStyle = {
             "color": "#ff7800",
             "weight": 5,
@@ -117,7 +108,6 @@
             style: myStyle
         }).addTo(map);
 
-        // Styled polygons by party
         L.geoJSON(myPolys, {
             style: function (feature) {
                 switch (feature.properties.party) {
@@ -127,7 +117,6 @@
             }
         }).addTo(map);
 
-        // --- US states with click-to-zoom ---
 
         function zoomToFeature(e) {
             map.fitBounds(e.target.getBounds());
@@ -139,7 +128,6 @@
             });
         }
 
-        // statesData comes from us-states.js
         L.geoJSON(statesData, {
             onEachFeature: onEachFeature
         }).addTo(map);
