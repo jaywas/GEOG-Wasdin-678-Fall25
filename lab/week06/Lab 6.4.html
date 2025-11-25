@@ -75,16 +75,15 @@
             this.update();
             return this._div;
         };
-
+        
         info.update = function (props) {
             this._div.innerHTML =
                 '<h4>TAMU Buildings</h4>' +
                 (props
-                    ? '<b>' + (props.name || 'Unknown') + '</b><br />' +
-                      'Abbr: ' + (props.abbr || 'N/A')
+                    ? '<b>' + (props.BldgName || 'Unknown') + '</b><br />' +
+                    'Abbr: ' + (props.BldgAbbr || 'N/A')
                     : 'Hover over a building');
-        };
-
+};
         info.addTo(map);
 
         function buildingStyle(feature) {
@@ -132,10 +131,11 @@
             });
         }
 
-        buildingsLayer = L.geoJSON(TAMU_Buildings, {
+        buildingsLayer = L.geoJSON(tamu, {
             style: buildingStyle,
             onEachFeature: onEachBuilding
         }).addTo(map);
+
     </script>
 </body>
 </html>
