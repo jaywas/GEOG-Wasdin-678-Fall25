@@ -23,7 +23,7 @@
             var map = L.map("mapid").setView([39.74739, -106], 4);
 
             L.tileLayer(
-                'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
+                "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
                 {
                     attribution:
                         '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> ' +
@@ -32,15 +32,13 @@
                     tileSize: 512,
                     maxZoom: 18,
                     zoomOffset: -1,
-                    id: 'mapbox/streets-v11',
+                    id: "mapbox/streets-v11",
                     accessToken:
-                        'pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw'
+                        "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw"
                 }
             ).addTo(map);
         };
     </script>
 </head>
 <body>
-    <div id="mapid" style="height: 500px; width: 800px;"></div>
-</body>
-</html>
+    <d
