@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <title>Lab 6 Leaflet</title>
 
-    <!-- Leaflet CSS -->
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
-    <!-- Leaflet JS -->
+
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
-    <!-- ⭐ US States GeoJSON file -->
+
     <script type="text/javascript" src="https://leafletjs.com/examples/choropleth/us-states.js"></script>
 
 </head>
@@ -20,25 +20,19 @@
     <div id="mapid" style="height: 500px; width: 800px; border: 1px solid #000;"></div>
 
     <script>
-        // Initialize the map
+     
         var map = L.map("mapid").setView([39.74739, -106], 4);
 
-        // OpenStreetMap basemap
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
             maxZoom: 19,
             attribution: "© OpenStreetMap contributors"
         }).addTo(map);
 
 
-        // ⭐⭐⭐ ADD THIS RIGHT AFTER THE MAP — YOUR FIRST GEOJSON LAYER ⭐⭐⭐
-        // Draw the state boundaries from us-states.js
         L.geoJson(statesData).addTo(map);
 
 
 
-        // ------------------------------------------
-        // Your other GeoJSON data (points, lines, polygons)
-        // ------------------------------------------
 
         var myPoint = {
             "type": "Feature",
