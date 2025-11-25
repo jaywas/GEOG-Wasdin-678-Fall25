@@ -1,45 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
     <title>Lab 6 Leaflet</title>
 
+    <!-- Leaflet CSS (no integrity/crossorigin to avoid validator warnings) -->
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-        integrity="sha512-xodZBNTC5n17Xt2f1PHzVhJSVcW0vVbqq0LCScCxxbQcmblAsH0Awo5/keqq/5HXMZ19CsR4PsZChSR7A=="
-        crossorigin=""
     />
 
-    <script
-        src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdlxQxGm2A48HoEgjfqKsIN0QVnMcBCe8PKaoC0Y20wIlAxvA0zWea1opb1xzLx20Y3Rz+5w=="
-        crossorigin=""
-    ></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 
 <body>
-
-    <div id="mapid" style="height: 500px; width: 800px;"></div>
+    <div id="mapid" style="height: 500px; width: 800px; border: 1px solid #000;"></div>
 
     <script>
-      
+        // Initialize the map
         var map = L.map("mapid").setView([39.74739, -106], 4);
 
-
+        // Mapbox basemap
         L.tileLayer(
-            "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+            'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}',
             {
                 attribution:
                     'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
                     'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 maxZoom: 18,
-                id: "mapbox/streets-v11",
+                id: 'mapbox/streets-v11',
                 tileSize: 512,
                 zoomOffset: -1,
-                accessToken:
-                    "pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWYzM2o2azAwYmczZHB2Z2VmMGpibnMifQ.ARqGnHih7CpWSzX05qW_OA"
+                accessToken: 'pk.eyJ1IjoiamF5d2FzZGluIiwiYSI6ImNtaWFqeGQxcTB3eGUyanB4dWcxbzJ1eHkifQ.sjlpSTm3aTv_NSZLqqqjGw'
             }
         ).addTo(map);
+
+        // ---------- GeoJSON content ----------
 
         var myPoint = {
             "type": "Feature",
@@ -50,7 +47,7 @@
             },
             "geometry": {
                 "type": "Point",
-                "coordinates": [-104.99404, 39.75621] // [lon, lat]
+                "coordinates": [-104.99404, 39.75621]
             }
         };
 
@@ -64,7 +61,6 @@
                 "coordinates": [[-105, 40], [-110, 45], [-115, 55]]
             }
         ];
-
 
         var myPolys = [
             {
@@ -97,6 +93,7 @@
             }
         ];
 
+        // Point with popup
         L.geoJSON(myPoint, {
             onEachFeature: function (feature, layer) {
                 if (feature.properties && feature.properties.popupContent) {
@@ -105,16 +102,18 @@
             }
         }).addTo(map);
 
+        // Styled lines
         var myStyle = {
-            "color": "#ff7800",
-            "weight": 5,
-            "opacity": 0.65
+            color: "#ff7800",
+            weight: 5,
+            opacity: 0.65
         };
 
         L.geoJSON(myLines, {
             style: myStyle
         }).addTo(map);
 
+        // Polygons styled by party
         L.geoJSON(myPolys, {
             style: function (feature) {
                 switch (feature.properties.party) {
