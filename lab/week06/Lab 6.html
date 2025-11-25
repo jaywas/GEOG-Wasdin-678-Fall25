@@ -3,7 +3,6 @@
 <head>
     <title>Lab 6 Leaflet</title>
 
-    <!-- Leaflet CSS -->
     <link
         rel="stylesheet"
         href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -11,7 +10,6 @@
         crossorigin=""
     />
 
-    <!-- Leaflet JS -->
     <script
         src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdlxQxGm2A48HoEgjfqKsIN0QVnMcBCe8PKaoC0Y20wIlAxvA0zWea1opb1xzLx20Y3Rz+5w=="
@@ -20,14 +18,14 @@
 </head>
 
 <body>
-    <!-- Map container -->
+
     <div id="mapid" style="height: 500px; width: 800px;"></div>
 
     <script>
-        // Initialize the map (centered over the western US)
+      
         var map = L.map("mapid").setView([39.74739, -106], 4);
 
-        // Mapbox Streets tile layer
+
         L.tileLayer(
             "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
             {
@@ -43,9 +41,6 @@
             }
         ).addTo(map);
 
-        // -----------------------
-        // GeoJSON point (Coors Field)
-        // -----------------------
         var myPoint = {
             "type": "Feature",
             "properties": {
@@ -59,9 +54,6 @@
             }
         };
 
-        // -----------------------
-        // GeoJSON line strings
-        // -----------------------
         var myLines = [
             {
                 "type": "LineString",
@@ -73,9 +65,7 @@
             }
         ];
 
-        // -----------------------
-        // GeoJSON polygons with "party" property
-        // -----------------------
+
         var myPolys = [
             {
                 "type": "Feature",
@@ -107,7 +97,6 @@
             }
         ];
 
-        // Add basic GeoJSON layers
         L.geoJSON(myPoint, {
             onEachFeature: function (feature, layer) {
                 if (feature.properties && feature.properties.popupContent) {
@@ -116,7 +105,6 @@
             }
         }).addTo(map);
 
-        // Simple style for both lines
         var myStyle = {
             "color": "#ff7800",
             "weight": 5,
@@ -127,7 +115,6 @@
             style: myStyle
         }).addTo(map);
 
-        // Style polygons based on "party" attribute
         L.geoJSON(myPolys, {
             style: function (feature) {
                 switch (feature.properties.party) {
