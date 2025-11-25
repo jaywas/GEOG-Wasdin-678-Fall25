@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Your Name TAMU Map</title>
+    <title>Wasdin Lab 6</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"
       integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
       crossorigin=""/>
@@ -25,10 +25,9 @@
     </style>
   </head>
   <body>
-    <h1>Your Name TAMU Map</h1>
+    <h1>Wasdin Lab 6</h1>
     <div id="mapid"></div>
     
-    <!-- Include the TAMU buildings GeoJSON file -->
     <script type="text/javascript" src="tamubuildings.js"></script>
     
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
@@ -36,16 +35,13 @@
       crossorigin=""></script>
     
     <script>
-      // TAMU coordinates: 30.6188, -96.3365
       var map = L.map('mapid').setView([30.6188, -96.3365], 15);
       
-      // Using OpenStreetMap tiles instead of Mapbox (no token needed)
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         maxZoom: 19
       }).addTo(map);
       
-      // Create info control
       var info = L.control();
       
       info.onAdd = function(map) {
@@ -63,19 +59,17 @@
       
       info.addTo(map);
       
-      // Style for buildings
       function style(feature) {
         return {
           weight: 2,
           opacity: 1,
-          color: '#800000', // Maroon color
+          color: '#800000', 
           dashArray: '3',
           fillOpacity: 0.7,
           fillColor: '#800000'
         };
       }
       
-      // Highlight function
       function highlightFeature(e) {
         var layer = e.target;
         
@@ -93,18 +87,15 @@
         info.update(layer.feature.properties);
       }
       
-      // Reset highlight
       function resetHighlight(e) {
         buildingsLayer.resetStyle(e.target);
         info.update();
       }
       
-      // Zoom to feature
       function zoomToFeature(e) {
         map.fitBounds(e.target.getBounds());
       }
       
-      // Set listeners for each feature
       function onEachFeature(feature, layer) {
         layer.on({
           mouseover: highlightFeature,
@@ -113,7 +104,6 @@
         });
       }
       
-      // Add GeoJSON layer with the styling and interactions
       var buildingsLayer = L.geoJSON(tamuBuildings, {
         style: style,
         onEachFeature: onEachFeature
