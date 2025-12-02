@@ -66,7 +66,6 @@
     map.on('locationfound', onLocationFound);
     map.on('locationerror', onLocationError);
 
-
     var kyleFieldLatLng = [30.61025, -96.339844];
 
     var kyleCircle = L.circle(kyleFieldLatLng, {
@@ -107,11 +106,17 @@
         .addTo(map)
         .bindPopup("Academic Building");
 
-
     map.on('click', function (e) {
-        alert("You clicked the map at\nLatitude: " + e.latlng.lat.toFixed(6) +
-              "\nLongitude: " + e.latlng.lng.toFixed(6));
+        L.popup()
+            .setLatLng(e.latlng)
+            .setContent(
+                "You clicked the map at:<br>" +
+                "Latitude: " + e.latlng.lat.toFixed(6) + "<br>" +
+                "Longitude: " + e.latlng.lng.toFixed(6)
+            )
+            .openOn(map);
     });
+
 </script>
 
 </body>
