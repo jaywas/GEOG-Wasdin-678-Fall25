@@ -1,4 +1,9 @@
-# Lab 6
+# Lab 6 Update
+
+Here is a SH of the building with a click, not sure how to prove that it zooms with a click, other than you opening it and clicking a building.
+
+<img width="1113" height="606" alt="Custom Map 1" src="https://github.com/user-attachments/assets/bae83278-df32-4411-a1eb-228c478bc92e" />
+
 <img width="801" height="503" alt="Lab 6 1" src="https://github.com/user-attachments/assets/7d81d841-4c4c-4819-af2e-5f11c5532fa8" />
 
 <img width="944" height="638" alt="Lab 6 2" src="https://github.com/user-attachments/assets/fa8e0882-152f-462e-a894-a8163db5f585" />
