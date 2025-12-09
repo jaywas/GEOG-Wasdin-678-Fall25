@@ -1,1 +1,188 @@
 # GEOG-678-755-Fall25
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>College Station Weekly Temperature Forecast - D3</title>
+
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        #chart {
+            background: #f9f9f9;
+            border: 1px solid #ccc;
+        }
+
+        .line {
+            fill: none;
+            stroke-width: 2px;
+        }
+
+        .line.high {
+            stroke: #d62728; /* red */
+        }
+
+        .line.low {
+            stroke: #1f77b4; /* blue */
+        }
+
+        .dot-high {
+            fill: #d62728;
+        }
+
+        .dot-low {
+            fill: #1f77b4;
+        }
+
+        .axis-label {
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>College Station Weekly Temperature Forecast (D3.js)</h1>
+    <p>High and low temperatures (°F) for College Station over an eight-day period.</p>
+
+    <svg id="chart" width="700" height="400"></svg>
+
+    <script>
+        // Data: College Station Weekly Temperature Forecast
+        var data = [
+            { day: "Sat",  high: 82, low: 67 },
+            { day: "Sun",  high: 81, low: 59 },
+            { day: "Mon",  high: 81, low: 50 },
+            { day: "Tue",  high: 70, low: 47 },
+            { day: "Wed",  high: 77, low: 51 },
+            { day: "Thu",  high: 78, low: 60 },
+            { day: "Fri",  high: 79, low: 66 },
+            { day: "Sat2", high: 80, low: 66 } // second Saturday
+        ];
+
+        var svg = d3.select("#chart"),
+            margin = { top: 40, right: 120, bottom: 50, left: 50 },
+            width = +svg.attr("width") - margin.left - margin.right,
+            height = +svg.attr("height") - margin.top - margin.bottom;
+
+        var g = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        // x-scale: categorical days
+        var x = d3.scalePoint()
+            .domain(data.map(function(d) { return d.day; }))
+            .range([0, width])
+            .padding(0.5);
+
+        // y-scale: temperatures
+        var y = d3.scaleLinear()
+            .domain([
+                d3.min(data, function(d) { return d.low; }) - 5,
+                d3.max(data, function(d) { return d.high; }) + 5
+            ])
+            .range([height, 0]);
+
+        // Line generators
+        var lineHigh = d3.line()
+            .x(function(d) { return x(d.day); })
+            .y(function(d) { return y(d.high); });
+
+        var lineLow = d3.line()
+            .x(function(d) { return x(d.day); })
+            .y(function(d) { return y(d.low); });
+
+        // X axis
+        g.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x))
+            .append("text")
+            .attr("class", "axis-label")
+            .attr("x", width / 2)
+            .attr("y", 35)
+            .attr("fill", "#000")
+            .text("Day of Week");
+
+        // Y axis
+        g.append("g")
+            .call(d3.axisLeft(y))
+            .append("text")
+            .attr("class", "axis-label")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -height / 2)
+            .attr("y", -35)
+            .attr("fill", "#000")
+            .attr("text-anchor", "middle")
+            .text("Temperature (°F)");
+
+        // High temperature line
+        g.append("path")
+            .datum(data)
+            .attr("class", "line high")
+            .attr("d", lineHigh);
+
+        // Low temperature line
+        g.append("path")
+            .datum(data)
+            .attr("class", "line low")
+            .attr("d", lineLow);
+
+        // High temp points
+        g.selectAll(".dot-high")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("class", "dot-high")
+            .attr("r", 3)
+            .attr("cx", function(d) { return x(d.day); })
+            .attr("cy", function(d) { return y(d.high); });
+
+        // Low temp points
+        g.selectAll(".dot-low")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("class", "dot-low")
+            .attr("r", 3)
+            .attr("cx", function(d) { return x(d.day); })
+            .attr("cy", function(d) { return y(d.low); });
+
+        // Legend
+        var legend = g.append("g")
+            .attr("transform", "translate(" + (width + 10) + ",0)");
+
+        legend.append("line")
+            .attr("class", "line high")
+            .attr("x1", 0)
+            .attr("y1", 5)
+            .attr("x2", 20)
+            .attr("y2", 5);
+
+        legend.append("text")
+            .attr("x", 25)
+            .attr("y", 9)
+            .text("High (°F)");
+
+        legend.append("line")
+            .attr("class", "line low")
+            .attr("x1", 0)
+            .attr("y1", 25)
+            .attr("x2", 20)
+            .attr("y2", 25);
+
+        legend.append("text")
+            .attr("x", 25)
+            .attr("y", 29)
+            .text("Low (°F)");
+    </script>
+</body>
+</html>
