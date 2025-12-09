@@ -2,93 +2,131 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>College Station Weekly Temperature Forecast - Highcharts</title>
+    <title>College Station Weekly Temperature Forecast</title>
 
-    <!-- Highcharts -->
+    <!-- Highcharts and modules -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/themes/adaptive.js"></script>
 
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 20px;
-        }
-
-        h1 {
-            font-size: 20px;
-            margin-bottom: 10px;
+        .highcharts-figure,
+        .highcharts-data-table table {
+            min-width: 310px;
+            max-width: 800px;
+            margin: 1em auto;
         }
 
         #container {
-            min-width: 310px;
-            max-width: 800px;
             height: 400px;
-            margin: 0 auto;
+        }
+
+        .highcharts-description {
+            margin: 1em 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <h1>College Station Weekly Temperature Forecast (Highcharts)</h1>
-    <p>High and low temperatures (°F) for College Station over an eight-day period.</p>
 
+<figure class="highcharts-figure">
     <div id="container"></div>
+    <p class="highcharts-description">
+        College Station weekly temperature forecast. The shaded band shows the
+        daily low–high temperature range, and the line shows the average
+        temperature for each day.
+    </p>
+</figure>
 
-    <script>
-        Highcharts.chart('container', {
+<script>
+    // Forecast data
+    const days   = ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const highs  = [82, 81, 81, 70, 77, 78, 79, 80];
+    const lows   = [67, 59, 50, 47, 51, 60, 66, 66];
+
+    // Compute averages
+    const averages = highs.map((h, i) => (h + lows[i]) / 2);
+
+    // Arearange series expects low/high per point
+    const rangeData = lows.map((low, i) => ({
+        x: i,
+        low: low,
+        high: highs[i]
+    }));
+
+    Highcharts.chart('container', {
+        title: {
+            text: 'College Station Weekly Temperature Forecast'
+        },
+
+        subtitle: {
+            text: 'Daily high–low temperature range with average temperature'
+        },
+
+        xAxis: {
+            categories: days,
             title: {
-                text: 'College Station Weekly Temperature Forecast'
-            },
-            subtitle: {
-                text: 'High and low daily temperatures (°F)'
-            },
-            xAxis: {
-                categories: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                crosshair: true
-            },
-            yAxis: {
-                title: {
-                    text: 'Temperature (°F)'
-                }
-            },
-            tooltip: {
-                shared: true,
-                valueSuffix: ' °F'
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
-            },
-            plotOptions: {
-                series: {
-                    label: {
-                        connectorAllowed: false
-                    }
-                }
-            },
-            series: [{
-                name: 'High',
-                data: [82, 81, 81, 70, 77, 78, 79, 80]
-            }, {
-                name: 'Low',
-                data: [67, 59, 50, 47, 51, 60, 66, 66]
-            }],
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
+                text: 'Day of Week'
             }
-        });
-    </script>
+        },
+
+        yAxis: {
+            title: {
+                text: 'Temperature (°F)'
+            }
+        },
+
+        tooltip: {
+            shared: true,
+            valueSuffix: ' °F'
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        series: [{
+            name: 'Temperature range',
+            type: 'arearange',
+            data: rangeData,
+            zIndex: 0,
+            lineWidth: 0,
+            marker: {
+                enabled: false
+            }
+        }, {
+            name: 'Average temperature',
+            type: 'line',
+            data: averages,
+            zIndex: 1,
+            marker: {
+                enabled: true
+            }
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+    });
+</script>
+
 </body>
 </html>
