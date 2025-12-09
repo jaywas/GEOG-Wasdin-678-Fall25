@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>College Station Weekly Temperature Forecast – D3 (Module)</title>
+
+    <style>
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        margin: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      #d3-temp-chart {
+        max-width: 800px;
+        margin: 30px auto;
+      }
+
+      #d3-temp-chart svg {
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>College Station Weekly Temperature Forecast – D3.js</h1>
+    <div id="d3-temp-chart"></div>
+
+    <!-- Use ES modules here -->
+    <script type="module">
+      // Import D3 as an ES module
+      import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+      // -------------------------------------------------
+      // Data
+      // -------------------------------------------------
+      const tempData = [
+        { day: "Sat", high: 82, low: 67 },
+        { day: "Sun", high: 81, low: 59 },
+        { day: "Mon", high: 81, low: 50 },
+        { day: "Tue", high: 70, low: 47 },
+        { day: "Wed", high: 77, low: 51 },
+        { day: "Thu", high: 78, low: 60 },
+        { day: "Fri", high: 79, low: 66 },
+        { day: "Sat", high: 80, low: 66 },
+      ];
+
+      // -------------------------------------------------
+      // Basic chart setup
+      // -------------------------------------------------
+      const margin = { top: 20, right: 80, bottom: 40, left: 50 },
+        width = 800 - margin.left - margin.right,
+        height = 400 - margin.top - margin.bottom;
+
+      const svg = d3
+        .select("#d3-temp-chart")
+        .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", `translate(${margin.left},${margin.top})`);
+
+      // x scale – use day names
+      const x = d3
+        .scalePoint()
+        .domain(tempData.map((d) => d.day))
+        .range([0, width])
+        .padding(0.5);
+
+      // y scale – based on min low and max high
+      const y = d3
+        .scaleLinear()
+        .domain([
+          d3.min(tempData, (d) => d.low) - 5,
+          d3.max(tempData, (d) => d.high) + 5,
+        ])
+        .range([height, 0]);
+
+      const xAxis = d3.axisBottom(x);
+      const yAxis = d3.axisLeft(y);
+
+      // Line generators
+      const lineHigh = d3
+        .line()
+        .x((d) => x(d.day))
+        .y((d) => y(d.high));
+
+      const lineLow = d3
+        .line()
+        .x((d) => x(d.day))
+        .y((d) => y(d.low));
+
+      // Axes
+      svg
+        .append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(xAxis);
+
+      svg.append("g").call(yAxis);
+
+      // Axis labels
+      svg
+        .append("text")
+        .attr("transform", `translate(${width / 2},${height + 30})`)
+        .style("text-anchor", "middle")
+        .text("Day");
+
+      svg
+        .append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -40)
+        .attr("x", -height / 2)
+        .style("text-anchor", "middle")
+        .text("Temperature (°F)");
+
+      // High temp line
+      svg
+        .append("path")
+        .datum(tempData)
+        .attr("fill", "none")
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 2)
+        .attr("d", lineHigh);
+
+      // Low temp line
+      svg
+        .append("path")
+        .datum(tempData)
+        .attr("fill", "none")
+        .attr("stroke", "tomato")
+        .attr("stroke-width", 2)
+        .attr("d", lineLow);
+
+      // Simple legend
+      const legend = svg.append("g").attr("transform", `translate(${width - 120},10)`);
+
+      legend
+        .append("rect")
+        .attr("width", 120)
+        .attr("height", 40)
+        .attr("fill", "white")
+        .attr("stroke", "#ccc");
+
+      legend
+        .append("line")
+        .attr("x1", 10)
+        .attr("y1", 13)
+        .attr("x2", 30)
+        .attr("y2", 13)
+        .attr("stroke", "steelblue")
+        .attr("stroke-width", 2);
+
+      legend.append("text").attr("x", 35).attr("y", 16).text("High");
+
+      legend
+        .append("line")
+        .attr("x1", 10)
+        .attr("y1", 27)
+        .attr("x2", 30)
+        .attr("y2", 27)
+        .attr("stroke", "tomato")
+        .attr("stroke-width", 2);
+
+      legend.append("text").attr("x", 35).attr("y", 30).text("Low");
+    </script>
+  </body>
+</html>
