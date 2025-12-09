@@ -1,186 +1,153 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <meta charset="utf-8" />
-    <title>College Station Weekly Temperature Forecast - D3</title>
-
-    <!-- D3.js -->
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <title>College Station Weekly Temperature Forecast – D3 (Module)</title>
 
     <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            margin: 20px;
-        }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        margin: 20px;
+      }
 
-        h1 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
+      h1 {
+        text-align: center;
+      }
 
-        #chart {
-            background: #f9f9f9;
-            border: 1px solid #ccc;
-        }
+      #d3-temp-chart {
+        max-width: 800px;
+        margin: 30px auto;
+      }
 
-        .line {
-            fill: none;
-            stroke-width: 2px;
-        }
-
-        .line.high {
-            stroke: #d62728; /* red */
-        }
-
-        .line.low {
-            stroke: #1f77b4; /* blue */
-        }
-
-        .dot-high {
-            fill: #d62728;
-        }
-
-        .dot-low {
-            fill: #1f77b4;
-        }
-
-        .axis-label {
-            font-size: 12px;
-        }
+      #d3-temp-chart svg {
+        border: 1px solid #ccc;
+      }
     </style>
-</head>
-<body>
-    <h1>College Station Weekly Temperature Forecast (D3.js)</h1>
-    <p>High and low temperatures (°F) for College Station over an eight-day period.</p>
+  </head>
 
-    <svg id="chart" width="700" height="400"></svg>
+  <body>
+    <h1>College Station Weekly Temperature Forecast – D3.js</h1>
+    <div id="d3-temp-chart"></div>
 
-    <script>
-        // Data: College Station Weekly Temperature Forecast
-        var data = [
-            { day: "Sat",  high: 82, low: 67 },
-            { day: "Sun",  high: 81, low: 59 },
-            { day: "Mon",  high: 81, low: 50 },
-            { day: "Tue",  high: 70, low: 47 },
-            { day: "Wed",  high: 77, low: 51 },
-            { day: "Thu",  high: 78, low: 60 },
-            { day: "Fri",  high: 79, low: 66 },
-            { day: "Sat2", high: 80, low: 66 } // second Saturday
-        ];
+<script type="module">
 
-        var svg = d3.select("#chart"),
-            margin = { top: 40, right: 120, bottom: 50, left: 50 },
-            width = +svg.attr("width") - margin.left - margin.right,
-            height = +svg.attr("height") - margin.top - margin.bottom;
+  import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-        var g = svg.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  const tempData = [
+    { day: "Sat", high: 82, low: 67 },
+    { day: "Sun", high: 81, low: 59 },
+    { day: "Mon", high: 81, low: 50 },
+    { day: "Tue", high: 70, low: 47 },
+    { day: "Wed", high: 77, low: 51 },
+    { day: "Thu", high: 78, low: 60 },
+    { day: "Fri", high: 79, low: 66 },
+    { day: "Sat", high: 80, low: 66 },
+  ];
 
-        // x-scale: categorical days
-        var x = d3.scalePoint()
-            .domain(data.map(function(d) { return d.day; }))
-            .range([0, width])
-            .padding(0.5);
+  const series = ["High", "Low"];
 
-        // y-scale: temperatures
-        var y = d3.scaleLinear()
-            .domain([
-                d3.min(data, function(d) { return d.low; }) - 5,
-                d3.max(data, function(d) { return d.high; }) + 5
-            ])
-            .range([height, 0]);
+  const margin = { top: 30, right: 40, bottom: 40, left: 50 },
+    width = 800 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
 
-        // Line generators
-        var lineHigh = d3.line()
-            .x(function(d) { return x(d.day); })
-            .y(function(d) { return y(d.high); });
+  const svg = d3
+    .select("#d3-temp-chart")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        var lineLow = d3.line()
-            .x(function(d) { return x(d.day); })
-            .y(function(d) { return y(d.low); });
+  const x0 = d3
+    .scaleBand()
+    .domain(tempData.map((d) => d.day))
+    .range([0, width])
+    .padding(0.2);
 
-        // X axis
-        g.append("g")
-            .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(x))
-            .append("text")
-            .attr("class", "axis-label")
-            .attr("x", width / 2)
-            .attr("y", 35)
-            .attr("fill", "#000")
-            .text("Day of Week");
+  const x1 = d3
+    .scaleBand()
+    .domain(series)
+    .range([0, x0.bandwidth()])
+    .padding(0.05);
 
-        // Y axis
-        g.append("g")
-            .call(d3.axisLeft(y))
-            .append("text")
-            .attr("class", "axis-label")
-            .attr("transform", "rotate(-90)")
-            .attr("x", -height / 2)
-            .attr("y", -35)
-            .attr("fill", "#000")
-            .attr("text-anchor", "middle")
-            .text("Temperature (°F)");
+  const y = d3
+    .scaleLinear()
+    .domain([
+      40, 
+      90, 
+    ])
+    .nice()
+    .range([height, 0]);
 
-        // High temperature line
-        g.append("path")
-            .datum(data)
-            .attr("class", "line high")
-            .attr("d", lineHigh);
+  const color = d3
+    .scaleOrdinal()
+    .domain(series)
+    .range(["tomato", "steelblue"]); 
 
-        // Low temperature line
-        g.append("path")
-            .datum(data)
-            .attr("class", "line low")
-            .attr("d", lineLow);
+  svg
+    .append("g")
+    .attr("transform", `translate(0,${height})`)
+    .call(d3.axisBottom(x0));
 
-        // High temp points
-        g.selectAll(".dot-high")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("class", "dot-high")
-            .attr("r", 3)
-            .attr("cx", function(d) { return x(d.day); })
-            .attr("cy", function(d) { return y(d.high); });
+  svg.append("g").call(d3.axisLeft(y));
 
-        // Low temp points
-        g.selectAll(".dot-low")
-            .data(data)
-            .enter()
-            .append("circle")
-            .attr("class", "dot-low")
-            .attr("r", 3)
-            .attr("cx", function(d) { return x(d.day); })
-            .attr("cy", function(d) { return y(d.low); });
+  svg
+    .append("text")
+    .attr("x", width / 2)
+    .attr("y", height + 30)
+    .attr("text-anchor", "middle")
+    .text("Day");
 
-        // Legend
-        var legend = g.append("g")
-            .attr("transform", "translate(" + (width + 10) + ",0)");
+  svg
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("x", -height / 2)
+    .attr("y", -35)
+    .attr("text-anchor", "middle")
+    .text("Temperature (°F)");
 
-        legend.append("line")
-            .attr("class", "line high")
-            .attr("x1", 0)
-            .attr("y1", 5)
-            .attr("x2", 20)
-            .attr("y2", 5);
+  const dayGroups = svg
+    .selectAll(".day-group")
+    .data(tempData)
+    .enter()
+    .append("g")
+    .attr("class", "day-group")
+    .attr("transform", (d) => `translate(${x0(d.day)},0)`);
 
-        legend.append("text")
-            .attr("x", 25)
-            .attr("y", 9)
-            .text("High (°F)");
+  dayGroups
+    .selectAll("rect")
+    .data((d) => [
+      { key: "High", value: d.high },
+      { key: "Low", value: d.low },
+    ])
+    .enter()
+    .append("rect")
+    .attr("x", (d) => x1(d.key))
+    .attr("y", (d) => y(d.value))
+    .attr("width", x1.bandwidth())
+    .attr("height", (d) => height - y(d.value))
+    .attr("fill", (d) => color(d.key));
 
-        legend.append("line")
-            .attr("class", "line low")
-            .attr("x1", 0)
-            .attr("y1", 25)
-            .attr("x2", 20)
-            .attr("y2", 25);
+  const legend = svg
+    .append("g")
+    .attr("transform", `translate(${width - 120}, 0)`);
 
-        legend.append("text")
-            .attr("x", 25)
-            .attr("y", 29)
-            .text("Low (°F)");
-    </script>
-</body>
+  series.forEach((name, i) => {
+    const g = legend.append("g").attr("transform", `translate(0,${i * 20})`);
+
+    g.append("rect")
+      .attr("x", 0)
+      .attr("y", 0)
+      .attr("width", 12)
+      .attr("height", 12)
+      .attr("fill", color(name));
+
+    g.append("text")
+      .attr("x", 18)
+      .attr("y", 10)
+      .text(name);
+  });
+</script>
+  </body>
 </html>
