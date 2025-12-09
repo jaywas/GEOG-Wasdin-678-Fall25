@@ -30,14 +30,10 @@
     <h1>College Station Weekly Temperature Forecast – D3.js</h1>
     <div id="d3-temp-chart"></div>
 
-    <!-- Use ES modules here -->
 <script type="module">
-  // Import D3 as an ES module
+
   import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-  // -------------------------------------------------
-  // Data
-  // -------------------------------------------------
   const tempData = [
     { day: "Sat", high: 82, low: 67 },
     { day: "Sun", high: 81, low: 59 },
@@ -51,9 +47,6 @@
 
   const series = ["High", "Low"];
 
-  // -------------------------------------------------
-  // Chart setup
-  // -------------------------------------------------
   const margin = { top: 30, right: 40, bottom: 40, left: 50 },
     width = 800 - margin.left - margin.right,
     height = 400 - margin.top - margin.bottom;
@@ -66,26 +59,23 @@
     .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
-  // x scale for days
   const x0 = d3
     .scaleBand()
     .domain(tempData.map((d) => d.day))
     .range([0, width])
     .padding(0.2);
 
-  // x scale for High/Low within each day
   const x1 = d3
     .scaleBand()
     .domain(series)
     .range([0, x0.bandwidth()])
     .padding(0.05);
 
-  // y scale
   const y = d3
     .scaleLinear()
     .domain([
-      40, // a little below the lowest temp
-      90, // a little above the highest temp
+      40, 
+      90, 
     ])
     .nice()
     .range([height, 0]);
@@ -93,10 +83,8 @@
   const color = d3
     .scaleOrdinal()
     .domain(series)
-    .range(["tomato", "steelblue"]); // High = tomato, Low = steelblue
+    .range(["tomato", "steelblue"]); 
 
-
-  // Axes
   svg
     .append("g")
     .attr("transform", `translate(0,${height})`)
@@ -104,7 +92,6 @@
 
   svg.append("g").call(d3.axisLeft(y));
 
-  // Axis labels
   svg
     .append("text")
     .attr("x", width / 2)
@@ -120,7 +107,6 @@
     .attr("text-anchor", "middle")
     .text("Temperature (°F)");
 
-  // Group for each day
   const dayGroups = svg
     .selectAll(".day-group")
     .data(tempData)
@@ -129,7 +115,6 @@
     .attr("class", "day-group")
     .attr("transform", (d) => `translate(${x0(d.day)},0)`);
 
-  // Bars
   dayGroups
     .selectAll("rect")
     .data((d) => [
@@ -144,7 +129,6 @@
     .attr("height", (d) => height - y(d.value))
     .attr("fill", (d) => color(d.key));
 
-  // Legend
   const legend = svg
     .append("g")
     .attr("transform", `translate(${width - 120}, 0)`);
