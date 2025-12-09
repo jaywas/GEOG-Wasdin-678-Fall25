@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <title>College Station Weekly Temperature Forecast</title>
 
+    <!-- Highcharts core + arearange support -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -87,7 +88,8 @@
 </figure>
 
 <script>
-    const ranges = [
+    // High/low ranges: [low, high]
+    var ranges = [
         [67, 82], // Sat
         [59, 81], // Sun
         [50, 81], // Mon
@@ -98,4 +100,89 @@
         [66, 80]  // Sat
     ];
 
-    const av
+    // Averages as simple numbers
+    var averages = [
+        (67 + 82) / 2, // 74.5
+        (59 + 81) / 2, // 70
+        (50 + 81) / 2, // 65.5
+        (47 + 70) / 2, // 58.5
+        (51 + 77) / 2, // 64
+        (60 + 78) / 2, // 69
+        (66 + 79) / 2, // 72.5
+        (66 + 80) / 2  // 73
+    ];
+
+    Highcharts.chart('container', {
+        title: {
+            text: 'College Station Weekly Temperature Forecast',
+            align: 'left'
+        },
+
+        subtitle: {
+            text: 'Daily high–low temperature range with average temperature (°F)',
+            align: 'left'
+        },
+
+        xAxis: {
+            categories: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            title: {
+                text: 'Day of Week'
+            }
+        },
+
+        yAxis: {
+            title: {
+                text: 'Temperature (°F)'
+            }
+        },
+
+        tooltip: {
+            shared: true,
+            valueSuffix: ' °F'
+        },
+
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle'
+        },
+
+        series: [{
+            name: 'Temperature range',
+            type: 'arearange',
+            data: ranges,
+            lineWidth: 0,
+            fillOpacity: 0.3,
+            zIndex: 0,
+            marker: {
+                enabled: false
+            }
+        }, {
+            name: 'Average temperature',
+            type: 'line',
+            data: averages,
+            zIndex: 1,
+            marker: {
+                enabled: true
+            }
+        }],
+
+        responsive: {
+            rules: [{
+                condition: {
+                    maxWidth: 500
+                },
+                chartOptions: {
+                    legend: {
+                        layout: 'horizontal',
+                        align: 'center',
+                        verticalAlign: 'bottom'
+                    }
+                }
+            }]
+        }
+    });
+</script>
+
+</body>
+</html>
