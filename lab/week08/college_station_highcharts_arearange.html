@@ -4,13 +4,11 @@
     <meta charset="utf-8" />
     <title>College Station Weekly Temperature Forecast</title>
 
-    <!-- Highcharts and modules -->
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-    <script src="https://code.highcharts.com/themes/adaptive.js"></script>
 
     <style>
         body {
@@ -89,74 +87,6 @@
 </figure>
 
 <script>
-    function createChart(ranges, averages) {
-        Highcharts.chart('container', {
-
-            title: {
-                text: 'College Station Weekly Temperature Forecast',
-                align: 'left'
-            },
-
-            subtitle: {
-                text: 'Daily high–low temperature range with average temperature (°F)',
-                align: 'left'
-            },
-
-            xAxis: {
-                categories: ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-                title: {
-                    text: 'Day of Week'
-                }
-            },
-
-            yAxis: {
-                title: {
-                    text: 'Temperature (°F)'
-                }
-            },
-
-            tooltip: {
-                crosshairs: true,
-                shared: true,
-                valueSuffix: ' °F'
-            },
-
-            plotOptions: {
-                series: {
-                    // using categories, so no pointStart needed
-                }
-            },
-
-            series: [{
-                name: 'Average temperature',
-                data: averages,
-                zIndex: 1,
-                marker: {
-                    fillColor: 'white',
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[0]
-                }
-            }, {
-                name: 'Temperature range',
-                data: ranges,
-                type: 'arearange',
-                lineWidth: 0,
-                linkedTo: ':previous',
-                color: Highcharts.getOptions().colors[0],
-                fillOpacity: 0.3,
-                zIndex: 0,
-                marker: {
-                    enabled: false
-                }
-            }]
-        });
-    }
-
-    // College Station Weekly Temperature Forecast data
-    // Sat  Sun  Mon  Tue  Wed  Thu  Fri  Sat
-    // High: 82,  81,  81,  70,  77,  78,  79,  80
-    // Low:  67,  59,  50,  47,  51,  60,  66,  66
-
     const ranges = [
         [67, 82], // Sat
         [59, 81], // Sun
@@ -168,4 +98,4 @@
         [66, 80]  // Sat
     ];
 
-    // Averages as [value] to match the original demo’s data structur
+    const av
